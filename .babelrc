@@ -1,0 +1,10 @@
+{
+  "presets": ["latest", "stage-2"],
+  "plugins": ["transform-runtime", "transform-vue-jsx"],
+  "comments": false,
+  "env": {
+    "test": {
+      "plugins": [ "istanbul" ]
+    }
+  }
+}
