@@ -8,6 +8,7 @@ const opn = require('opn')
 const proxyMiddleware = require('http-proxy-middleware')
 const webpackConfig = process.env.NODE_ENV === 'testing' ?
   require('./webpack.prod.conf') : require('./webpack.dev.conf')
+const createIsomorphicWebpack = require('isomorphic-webpack').createIsomorphicWebpack
 
 // default port where dev server listens for incoming traffic
 const port = process.env.PORT || config.dev.port
@@ -33,6 +34,14 @@ compiler.plugin('compilation', function (compilation) {
     cb()
   })
 })
+
+const {
+  createCompilationPromise,
+  evalBundleCode
+} = createIsomorphicWebpack(webpackConfig, {
+  useCompilationPromise: true
+});
+
 
 // proxy api requests
 Object.keys(proxyTable).forEach(function (context) {

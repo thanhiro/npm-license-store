@@ -13,7 +13,7 @@ exports.cssLoaders = function (options) {
   options = options || {}
   // generate loader string to be used with extract text plugin
   function generateLoaders (loaders) {
-    const sourceLoader = loaders.map(function (loader) {
+    const sourceLoader = loaders.map(loader => {
       let extraParamChar
       if (/\?/.test(loader)) {
         loader = loader.replace(/\?/, '-loader?')
@@ -47,7 +47,7 @@ exports.cssLoaders = function (options) {
 }
 
 // Generate loaders for standalone style files (outside of .vue)
-exports.styleLoaders = function (options) {
+exports.styleLoaders = options => {
   const output = []
   const loaders = exports.cssLoaders(options)
   for (const extension in loaders) {

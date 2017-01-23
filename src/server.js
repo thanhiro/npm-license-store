@@ -1,14 +1,14 @@
-var fs = require('fs')
-var path = require('path')
+const fs = require('fs')
+const path = require('path')
 // Define global Vue for server-side app.js
 global.Vue = require('vue')
 // Get the HTML layout
-var layout = fs.readFileSync(path.resolve(__dirname, '../index_universal.html'), 'utf8')
+const layout = fs.readFileSync(path.resolve(__dirname, '../index_universal.html'), 'utf8')
 // Create a renderer
-var renderer = require('vue-server-renderer').createRenderer()
+const renderer = require('vue-server-renderer').createRenderer()
 // Create an express server
-var express = require('express')
-var server = express()
+const express = require('express')
+const server = express()
 
 // Serve files from the assets directory
 server.use('/assets', express.static(
