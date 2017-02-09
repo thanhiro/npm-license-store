@@ -5,6 +5,15 @@ import App from './App'
 import Home from './routes/Home'
 import VueRouter from 'vue-router'
 import DataGrid from 'components/DataGrid'
+import ApolloClient, { createNetworkInterface } from 'apollo-client'
+import VueApollo from 'vue-apollo'
+
+const apolloClient = new ApolloClient({
+  networkInterface: createNetworkInterface({
+    uri: 'http://localhost:3020/graphql',
+    transportBatching: true
+  })
+})
 
 Vue.use(VueRouter)
 
@@ -29,6 +38,10 @@ const List = {
   }
 }
 
+Vue.use(VueApollo, {
+  apolloClient
+})
+
 const routes = [
   { path: '/', component: Home },
   { path: '/list', component: List }
@@ -41,15 +54,22 @@ const router = new VueRouter({
 
 /* eslint-disable no-new */
 const createApp = () => {
-  new Vue({
-    el: '#app',
+  const app = new Vue({
     template: '<App/>',
     components: { App },
     router
   })
+
+  if (typeof ISOMORPHIC_WEBPACK === 'undefined') {
+    app.el = '#app';
+  }
 }
-if (!__BROWSER__) {
-  module.exports = createApp
-} else {
+if (typeof ISOMORPHIC_WEBPACK === 'undefined') {
+  console.log('client')
   createApp()
+} else {
+  console.log('server')
 }
+
+export default createApp
+

@@ -22,7 +22,7 @@ const vueLoaderOptions = {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: path.resolve(__dirname, '../src/main.js')
   },
   output: {
     path: config.build.assetsRoot,
